@@ -10,6 +10,7 @@ end
 
 require 'chanko'
 require 'haml'
+require 'fixtures/test_units/engine_unit/lib/engine_unit/engine'
 require 'app'
 
 #Rails.root = Fir.dirname(__FILE__)
@@ -45,7 +46,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     $: << fixtures_path.join('lib')
     path = fixtures_path.join('test_units')
-    Chanko::Loader.directories.unshift(path)
+    Chanko::Loader.add_path(path)
     Chanko::ActiveIf.files = [fixtures_path.join('active_if', "main")]
     ApplicationController.send(:include, Chanko::Invoker)
     ActionView::Base.send(:include, Chanko::Invoker)

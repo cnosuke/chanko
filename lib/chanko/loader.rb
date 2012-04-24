@@ -90,7 +90,6 @@ module Chanko
         self.__aborted.uniq
       end
 
-
       def load_expander(unit_name)
         %w(models helpers).each do |targets|
           Chanko::Loader.directories.each do |directory|
@@ -152,11 +151,21 @@ module Chanko
 
       def load_path_file(file, root)
         @directories = Chanko::Directories.load_path_file(file, root)
+        initialize_engines
       end
 
       def add_path(path)
         @directories ||= Chanko::Directories.new
         @directories.add(path)
+        initialize_engines
+      end
+
+      def initialize_engines
+        Chanko::Loader.directories.each do |directory|
+          Pathname.glob("#{directory}/*/lib/*/engine.rb").each do |engine|
+            require engine.sub(/\.rb$/, '')
+          end
+        end
       end
 
       def remove_path(path)

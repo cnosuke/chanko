@@ -30,6 +30,8 @@ class CreateAllTables < ::ActiveRecord::Migration
   def self.up
     create_table(:users) {|t| t.string :name }
     create_table(:recipes) {|t| t.string :title; t.integer :user_id }
+    create_table(:diaries) {|t| t.string :content; t.integer :user_id }
+    create_table(:comments) {|t| t.string :content; t.integer :user_id }
   end
 end
 

@@ -7,7 +7,7 @@ module Chanko
     autoload klass.camelize, "chanko/#{klass}"
   end
 
-  class Railtie < Rails::Railtie
+  class Engine < ::Rails::Engine
     initializer 'chanko.attach' do |app|
       ::ActionView::Base.send(:include, Chanko::Invoker)
       ::ActionController::Base.send(:include, Chanko::Invoker)
